@@ -27,7 +27,7 @@ class _InfoPageState extends State<InfoPage> {
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: InterPage(),
+      body: Center(),
     );
   }
 }
@@ -58,40 +58,4 @@ Row newAppBar(BuildContext context, text) {
     ],
   );
   return newappbar;
-}
-
-class InterPage extends StatefulWidget {
-  @override
-  _InterPageState createState() => _InterPageState();
-}
-
-class _InterPageState extends State<InterPage> {
-  final GlobalKey webViewKey = GlobalKey();
-  InAppWebViewController? webViewController;
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-      crossPlatform: InAppWebViewOptions(
-        useShouldOverrideUrlLoading: true,
-        mediaPlaybackRequiresUserGesture: false,
-      ),
-      android: AndroidInAppWebViewOptions(
-        useHybridComposition: true,
-      ),
-      ios: IOSInAppWebViewOptions(
-        allowsInlineMediaPlayback: true,
-      ));
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: InAppWebView(
-        key: webViewKey,
-        initialUrlRequest:
-            URLRequest(url: Uri.parse('https://conf.imweb.me/info')),
-        initialOptions: options,
-        onWebViewCreated: (controller) {
-          webViewController = controller;
-        },
-      ),
-    );
-  }
 }
