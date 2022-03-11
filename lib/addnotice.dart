@@ -41,7 +41,7 @@ class addnotice extends StatelessWidget {
                 controller: notice,
                 decoration: InputDecoration(
                   prefix: Padding(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: EdgeInsets.only(right: 12),
                   ),
                   filled: true,
                   fillColor: Colors.grey.shade200,
