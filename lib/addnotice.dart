@@ -11,6 +11,11 @@ class addnotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OutlineInputBorder _border = OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.transparent, width: 0),
+      borderRadius: BorderRadius.circular(20),
+    );
+
     final ref = fb.ref().child('notice');
 
     return Scaffold(
@@ -19,7 +24,7 @@ class addnotice extends StatelessWidget {
         iconTheme: CupertinoIconThemeData(color: Colors.black),
         elevation: 0,
         title: Text(
-          '행사정보',
+          '공지 작성',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.grey[100],
@@ -38,8 +43,11 @@ class addnotice extends StatelessWidget {
                   prefix: Padding(
                     padding: EdgeInsets.only(right: 10),
                   ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  border: _border,
+                  enabledBorder: _border,
+                  focusedBorder: _border,
                   hintText: '공지사항',
                 ),
               ),
@@ -49,6 +57,8 @@ class addnotice extends StatelessWidget {
             ),
             MaterialButton(
               color: Colors.grey[900],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
               onPressed: () {
                 ref
                     .push()
@@ -60,7 +70,7 @@ class addnotice extends StatelessWidget {
                     context, MaterialPageRoute(builder: (_) => NoticePage()));
               },
               child: Text(
-                "save",
+                "업로드",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,

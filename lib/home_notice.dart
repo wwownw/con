@@ -44,7 +44,7 @@ class _HomeState extends State<notices> {
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref().child('todos');
+    final ref = fb.ref().child('notice');
     return Scaffold(
       backgroundColor: Colors.grey[100],
       floatingActionButton: FloatingActionButton(
@@ -63,18 +63,15 @@ class _HomeState extends State<notices> {
       ),
       body: FirebaseAnimatedList(
         query: ref,
-        shrinkWrap: true,
         itemBuilder: (context, snapshot, animation, index) {
           return GestureDetector(
             onTap: () {},
             child: Container(
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: ListTile(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                    ),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   tileColor: Colors.grey[200],
@@ -92,8 +89,8 @@ class _HomeState extends State<notices> {
                     child: Text(
                       snapshot.value.toString(),
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
