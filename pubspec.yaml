@@ -44,7 +44,6 @@ dependencies:
   firebase_auth: ^3.3.5
   firebase_database: ^9.0.4
   provider: ^6.0.2
-  get: ^4.6.1
   http:
 
 dev_dependencies:

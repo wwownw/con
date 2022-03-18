@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  String? attached;
+  String? uid;
   String? email;
   String? name;
   String? phone;
-  String? uid;
+  String? attached;
 
-  UserModel({this.attached, this.email, this.name, this.phone, this.uid});
+  UserModel({this.uid, this.email, this.name, this.phone, this.attached});
 
   //서버 데이터 받는
   factory UserModel.fromMap(map) {
@@ -24,11 +24,11 @@ class UserModel {
   //서버로 보내는
   Map<String, dynamic> toMap() {
     return {
-      'attached': attached,
+      'uid': uid,
       'email': email,
       'name': name,
       'phone': phone,
-      'uid': uid,
+      'attached': attached,
     };
   }
 }

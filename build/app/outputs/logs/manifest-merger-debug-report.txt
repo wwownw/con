@@ -97,6 +97,7 @@ MERGED from [:flutter_inappwebview] /Users/jiwon/StudioProjects/con/build/flutte
 MERGED from [:twitter_login] /Users/jiwon/StudioProjects/con/build/twitter_login/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-17:12
 MERGED from [:fluttertoast] /Users/jiwon/StudioProjects/con/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:google_sign_in] /Users/jiwon/StudioProjects/con/build/google_sign_in/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/02d04e6dfdbeb319e115f5728d226784/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.facebook.android:facebook-login:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/29ddef3817c4f5b226bd550cc5ce08b2/jetified-facebook-login-12.1.0/AndroidManifest.xml:21:1-31:12
 MERGED from [com.facebook.android:facebook-common:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/b5d3fa917699ce48f04a94a4d9e17c74/jetified-facebook-common-12.1.0/AndroidManifest.xml:21:1-52:12
 MERGED from [com.facebook.android:facebook-core:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/e62e4fde19dd7bf13e01bbe031bad4d2/jetified-facebook-core-12.1.0/AndroidManifest.xml:21:1-60:12
@@ -214,6 +215,8 @@ MERGED from [:fluttertoast] /Users/jiwon/StudioProjects/con/build/fluttertoast/i
 MERGED from [:fluttertoast] /Users/jiwon/StudioProjects/con/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:google_sign_in] /Users/jiwon/StudioProjects/con/build/google_sign_in/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:google_sign_in] /Users/jiwon/StudioProjects/con/build/google_sign_in/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/02d04e6dfdbeb319e115f5728d226784/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/02d04e6dfdbeb319e115f5728d226784/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [com.facebook.android:facebook-login:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/29ddef3817c4f5b226bd550cc5ce08b2/jetified-facebook-login-12.1.0/AndroidManifest.xml:24:5-26:41
 MERGED from [com.facebook.android:facebook-login:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/29ddef3817c4f5b226bd550cc5ce08b2/jetified-facebook-login-12.1.0/AndroidManifest.xml:24:5-26:41
 MERGED from [com.facebook.android:facebook-common:12.1.0] /Users/jiwon/.gradle/caches/transforms-2/files-2.1/b5d3fa917699ce48f04a94a4d9e17c74/jetified-facebook-common-12.1.0/AndroidManifest.xml:25:5-27:41
