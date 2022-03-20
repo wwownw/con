@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:con/module/usermodel.dart';
+import 'package:con/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterationScreen extends StatefulWidget {

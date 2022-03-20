@@ -41,12 +41,9 @@ class _CouponPageState extends State<CouponPage> {
         backgroundColor: Colors.grey[100],
       ),
       body: SafeArea(
-        child: ListView(scrollDirection: Axis.vertical, children: [
-          couponcard(context, const InfoPage()),
-          couponcard(context, const InfoPage()),
-          couponcard(context, const InfoPage()),
-          couponcard(context, const InfoPage())
-        ]),
+        child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [couponcard(context, const InfoPage())]),
       ),
       backgroundColor: Colors.grey[100],
     );
@@ -57,19 +54,19 @@ Padding couponcard(BuildContext context, StatefulWidget coupon) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 10),
     child: Card(
-      elevation: 1.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: InkWell(
-        child: Container(
-          child: Image.asset('images/dndkd.png'),
-          width: 380,
-          height: 200,
-        ),
-        splashColor: Colors.blueGrey.withAlpha(30),
+      child: GestureDetector(
         onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => coupon));
         },
+        child: Container(
+          width: 380,
+          height: 200,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage('images/dndkd.png')),
+          ),
+        ),
       ),
     ),
   );

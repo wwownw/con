@@ -184,13 +184,14 @@ class _loginppState extends State<loginpp> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
                 Fluttertoast.showToast(
-                    msg: '로그인 되었습니다.', backgroundColor: Colors.grey),
+                    msg: '로그인 되었습니다.', backgroundColor: Colors.grey.shade800),
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomeItem()))
               })
           .catchError((e) {
         Fluttertoast.showToast(
-            msg: '이메일과 비밀번호를 다시 확인해주세요.', backgroundColor: Colors.grey);
+            msg: '이메일과 비밀번호를 다시 확인해주세요.',
+            backgroundColor: Colors.grey.shade800);
       });
     }
   }

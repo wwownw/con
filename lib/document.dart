@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'home_info.dart';
 
 class FilePage extends StatefulWidget {
@@ -40,9 +42,9 @@ class _InterPageeState extends State<InterPagee> {
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
-        useShouldOverrideUrlLoading: true,
-        mediaPlaybackRequiresUserGesture: false,
-      ),
+          useShouldOverrideUrlLoading: true,
+          mediaPlaybackRequiresUserGesture: false,
+          useOnDownloadStart: true),
       android: AndroidInAppWebViewOptions(
         useHybridComposition: true,
       ),
@@ -55,8 +57,9 @@ class _InterPageeState extends State<InterPagee> {
     return SafeArea(
       child: InAppWebView(
         key: webViewKey,
-        initialUrlRequest:
-            URLRequest(url: Uri.parse('https://conf.imweb.me/file')),
+        initialUrlRequest: URLRequest(
+            url: Uri.parse(
+                'https://first-cashew-d37.notion.site/340a770de2544c6ba7d598c0e26591f9')),
         initialOptions: options,
         onWebViewCreated: (controller) {
           webViewController = controller;

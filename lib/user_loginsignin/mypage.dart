@@ -1,5 +1,5 @@
 import 'package:con/login.dart';
-import 'package:con/module/usermodel.dart';
+import 'package:con/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
