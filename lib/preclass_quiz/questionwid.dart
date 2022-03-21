@@ -1,4 +1,3 @@
-import 'package:con/notice/addnotice.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatelessWidget {
@@ -22,21 +21,23 @@ class QuestionWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Quiz',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               Text(
                 '${indexAction + 1}/$totalQuestions',
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 15),
               )
             ],
           ),
           Row(
             children: [
               Text(
-                '$question',
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),
+                question,
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 24),
               ),
             ],
           ),

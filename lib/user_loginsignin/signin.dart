@@ -1,10 +1,10 @@
-import 'package:con/login.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:con/model/usermodel.dart';
+import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'login.dart';
 
 class RegisterationScreen extends StatefulWidget {
   const RegisterationScreen({Key? key}) : super(key: key);
@@ -47,8 +47,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.person),
         ),
         hintText: '이름',
@@ -80,8 +80,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.phone),
         ),
         hintText: '연락처',
@@ -99,8 +99,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.person),
         ),
         hintText: '소속',
@@ -128,8 +128,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.email),
         ),
         hintText: '이메일',
@@ -156,8 +156,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.vpn_key),
         ),
         hintText: '비밀번호',
@@ -184,8 +184,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.vpn_key),
         ),
         hintText: '비밀번호 확인',
@@ -199,12 +199,12 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.grey,
       child: MaterialButton(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signUP(emailEditingController.text, passwordEditingController.text);
         },
-        child: Text(
+        child: const Text(
           '가입하기',
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
@@ -216,14 +216,14 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         backgroundColor: Colors.grey[50],
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(35),
+        padding: const EdgeInsets.all(35),
         child: Form(
           key: _formKey,
           child: Column(
@@ -231,17 +231,17 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               nameField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               phoneField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               attachedField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               emailField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               passwordField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               confirmPasswordField,
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               signinButton,
             ],
           ),
@@ -280,7 +280,9 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: '정상적으로 가입되었습니다.', backgroundColor: Colors.grey);
 
-    Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => loginpp()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const Loginpp()),
+        (route) => false);
   }
 }

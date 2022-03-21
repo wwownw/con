@@ -1,8 +1,9 @@
-import 'package:con/login.dart';
-import 'package:con/model/usermodel.dart';
+import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'login.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -24,14 +25,13 @@ class _MyPageState extends State<MyPage> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -54,8 +54,7 @@ class _MyPageState extends State<MyPage> {
                             const Padding(
                               padding: EdgeInsets.only(left: 30, right: 20),
                               child: CircleAvatar(
-                                backgroundColor:
-                                    Color.fromRGBO(40, 120, 100, 100),
+                                backgroundColor: Colors.black,
                                 radius: 30.0,
                               ),
                             ),
@@ -65,21 +64,21 @@ class _MyPageState extends State<MyPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${loggedInUser.name}',
-                                        style: TextStyle(
+                                    Text("${loggedInUser.name}",
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w800,
                                             fontSize: 22.0)),
                                   ],
                                 ),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Padding(
-                              padding: EdgeInsets.only(right: 30),
+                              padding: const EdgeInsets.only(right: 30),
                               child: MaterialButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Text('로그아웃'),
+                                  child: const Text('로그아웃'),
                                   color: Colors.white,
                                   onPressed: () {
                                     logout(context);
@@ -92,11 +91,11 @@ class _MyPageState extends State<MyPage> {
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 30),
                         color: Colors.white,
                         child: ListTile(
-                          leading: Icon(
+                          leading: const Icon(
                             Icons.festival,
                             color: Colors.grey,
                           ),
@@ -106,18 +105,18 @@ class _MyPageState extends State<MyPage> {
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 30),
                         color: Colors.white,
                         child: ListTile(
-                          leading: Icon(
+                          leading: const Icon(
                             Icons.call,
                             color: Colors.grey,
                           ),
                           title: Text('${loggedInUser.phone}'),
                         ),
                       ),
-                      SizedBox.fromSize(size: Size(0, 30))
+                      SizedBox.fromSize(size: const Size(0, 30))
                     ],
                   ),
                 ),
@@ -132,30 +131,28 @@ class _MyPageState extends State<MyPage> {
                 //     ),
                 //   ],
                 // ),
-                Container(
-                  child: Column(
-                    children: [
-                      SizedBox.fromSize(size: Size(0, 30)),
-                      tpalsk(context, '실론나이트쿠키', '7/2, 14:00-16:00, 대천초등학교',
-                          Colors.lightGreen.shade100),
-                      tpalsk(context, '수호의 성전', '7/3, 09:00-11:00, 컨벤션홀',
-                          Colors.amber.shade100),
-                      tpalsk(context, '길드 업데이트', '7/4, 13:00-14:00, 컴퓨터실',
-                          Colors.lightBlue.shade100),
-                      SizedBox.fromSize(size: Size(0, 10)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-                        color: Colors.grey.shade100,
-                        child: ListTile(
-                          leading: Icon(Icons.add),
-                          title: Text('관심 세미나 추가하기'),
-                        ),
+                Column(
+                  children: [
+                    SizedBox.fromSize(size: const Size(0, 30)),
+                    tpalsk(context, '실론나이트쿠키', '7/2, 14:00-16:00, 대천초등학교',
+                        Colors.lightGreen.shade100),
+                    tpalsk(context, '수호의 성전', '7/3, 09:00-11:00, 컨벤션홀',
+                        Colors.amber.shade100),
+                    tpalsk(context, '길드 업데이트', '7/4, 13:00-14:00, 컴퓨터실',
+                        Colors.lightBlue.shade100),
+                    SizedBox.fromSize(size: const Size(0, 10)),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 30),
+                      color: Colors.grey.shade100,
+                      child: const ListTile(
+                        leading: Icon(Icons.add),
+                        title: Text('관심 세미나 추가하기'),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -167,15 +164,15 @@ class _MyPageState extends State<MyPage> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => loginpp()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Loginpp()));
   }
 }
 
 Card tpalsk(BuildContext context, String title, String subtitle, Color color) {
   return Card(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+    margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
     color: color,
     child: ListTile(
       title: Padding(
@@ -187,8 +184,8 @@ Card tpalsk(BuildContext context, String title, String subtitle, Color color) {
         child: Text(subtitle),
       ),
       trailing: GestureDetector(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 5.0),
+        child: const Padding(
+          padding: EdgeInsets.only(right: 5.0),
           child: Icon(Icons.cancel_outlined),
         ),
       ),

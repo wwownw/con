@@ -1,9 +1,7 @@
 import 'package:con/home.dart';
-import 'package:con/signin.dart';
+import 'package:con/user_loginsignin/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -27,31 +25,31 @@ class LoginPage extends StatelessWidget {
                   if (!snapshot.hasData) {
                     // return SignInScreen(
                     //     providerConfigs: [EmailProviderConfiguration()]);
-                    return loginpp();
+                    return const Loginpp();
                   } else {
                     return HomeItem();
                   }
                 });
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         });
   }
 }
 
-class loginpp extends StatefulWidget {
-  const loginpp({Key? key}) : super(key: key);
+class Loginpp extends StatefulWidget {
+  const Loginpp({Key? key}) : super(key: key);
 
   @override
-  _loginppState createState() => _loginppState();
+  _LoginppState createState() => _LoginppState();
 }
 
-class _loginppState extends State<loginpp> {
+class _LoginppState extends State<Loginpp> {
   //
   final _formKey = GlobalKey<FormState>();
   //
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   //
   final _auth = FirebaseAuth.instance;
   //
@@ -77,8 +75,8 @@ class _loginppState extends State<loginpp> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.email),
         ),
         hintText: '이메일',
@@ -107,8 +105,8 @@ class _loginppState extends State<loginpp> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Icon(Icons.vpn_key),
         ),
         hintText: '비밀번호',
@@ -122,12 +120,12 @@ class _loginppState extends State<loginpp> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.grey,
       child: MaterialButton(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signIn(emailController.text, passwordController.text);
         },
-        child: Text(
+        child: const Text(
           '로그인',
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
@@ -136,32 +134,33 @@ class _loginppState extends State<loginpp> {
     );
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(35),
+        padding: const EdgeInsets.all(35),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               emailField,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               passwordField,
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               loginButton,
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('계정이 없어요!   '),
+                  const Text('계정이 없어요!   '),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterationScreen()));
+                              builder: (context) =>
+                                  const RegisterationScreen()));
                     },
-                    child: Text(
+                    child: const Text(
                       '가입하기',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

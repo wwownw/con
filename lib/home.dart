@@ -1,14 +1,17 @@
-import 'package:con/mypage.dart';
+import 'package:con/user_loginsignin/mypage.dart';
+import 'package:con/preclass_quiz/preclassquiz.dart';
+import 'package:con/coupon/couponcard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'home_coupon.dart';
-import 'home_file.dart';
-import 'home_info.dart';
-import 'home_map.dart';
-import 'home_notice.dart';
-import 'home_qna.dart';
-import 'home_schedule.dart';
+
+import 'coupon/coupon.dart';
+import 'document.dart';
+import 'information.dart';
+import 'map.dart';
+import 'notice/notice.dart';
+import 'faq.dart';
+import 'program.dart';
 import 'advertise.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -27,10 +30,9 @@ class _HomeItemState extends State<HomeItem> {
 
   Expanded homeButtons(
       StatefulWidget page, bool lockstate, String name, IconData icon) {
-    var size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
-        margin: EdgeInsets.all(6),
+        margin: const EdgeInsets.all(6),
         child: MaterialButton(
             elevation: 1.5,
             highlightElevation: 1.5,
@@ -43,7 +45,7 @@ class _HomeItemState extends State<HomeItem> {
                     : Colors.white
                 : Colors.white,
             child: Container(
-              margin: EdgeInsets.only(top: 25, bottom: 25),
+              margin: const EdgeInsets.only(top: 25, bottom: 25),
               child: Column(
                 children: [
                   Center(
@@ -84,7 +86,6 @@ class _HomeItemState extends State<HomeItem> {
 
   @override
   Widget build(BuildContext context) {
-    int selectedindex = 0;
     var size = MediaQuery.of(context).size;
     bool coolphone = true;
 
@@ -102,13 +103,13 @@ class _HomeItemState extends State<HomeItem> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        physics: coolphone ? NeverScrollableScrollPhysics() : null,
+        physics: coolphone ? const NeverScrollableScrollPhysics() : null,
         child: SafeArea(
           child: Column(children: [
             SizedBox(
               width: size.width,
               child: Padding(
-                padding: EdgeInsets.only(left: 25, top: 25, bottom: 25),
+                padding: const EdgeInsets.only(left: 25, top: 25, bottom: 25),
                 child: Row(
                   children: [
                     Column(
@@ -140,19 +141,19 @@ class _HomeItemState extends State<HomeItem> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
-                      padding: EdgeInsets.only(right: 25),
+                      padding: const EdgeInsets.only(right: 25),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                  builder: (context) => (MyPage())));
+                                  builder: (context) => (const MyPage())));
                         },
                         child: const Icon(
                           Icons.person,
-                          color: Color.fromRGBO(40, 120, 100, 100),
+                          color: Colors.black,
                           size: 35,
                         ),
                       ),
@@ -162,8 +163,14 @@ class _HomeItemState extends State<HomeItem> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Container(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const PreclassPage()));
+                  },
+                ),
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(20)),
@@ -172,50 +179,45 @@ class _HomeItemState extends State<HomeItem> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      homeButtons(const InfoPage(), false, '행사정보',
+                          Icons.wysiwyg_outlined),
                       homeButtons(
-                          InfoPage(), false, '행사정보', Icons.wysiwyg_outlined),
-                      homeButtons(MapPage(), false, '지도', Icons.map_outlined),
-                      homeButtons(SchedulePage(), false, '행사일정',
+                          const MapPage(), false, '지도', Icons.map_outlined),
+                      homeButtons(const SchedulePage(), false, '행사일정',
                           Icons.assignment_outlined),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      homeButtons(NoticePage(), false, '행사공지', Icons.list),
-                      homeButtons(QnaPage(), false, '문의', Icons.phone),
                       homeButtons(
-                          CouponPage(), true, '쿠폰', Icons.wallet_giftcard),
+                          const NoticePage(), false, '행사공지', Icons.list),
+                      homeButtons(const QnaPage(), false, '문의', Icons.phone),
+                      homeButtons(const CouponPage(), true, '쿠폰',
+                          Icons.wallet_giftcard),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      homeButtons(
-                          FilePage(), false, '행사자료', Icons.file_copy_outlined),
+                      homeButtons(const FilePage(), false, '행사자료',
+                          Icons.file_copy_outlined),
                     ],
                   ),
                 ],
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 25),
-            //   child: SizedBox(
-            //       height: 81,
-            //       child: ads(context, ad.advertises[selectedindex])),
-            // ), //이게 원래 하던거!!!!!!
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.amber.withAlpha(20)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 width: size.width,
                 height: 80,
                 child: Swiper(

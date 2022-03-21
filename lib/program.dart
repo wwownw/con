@@ -12,13 +12,12 @@ class SchedulePage extends StatefulWidget {
 class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: 자동 표그리기~!
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        iconTheme: CupertinoIconThemeData(color: Colors.black),
+        iconTheme: const CupertinoIconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text(
+        title: const Text(
           '행사일정',
           style: TextStyle(color: Colors.black),
         ),
@@ -27,6 +26,7 @@ class _SchedulePageState extends State<SchedulePage> {
       body: TimetableView(
         laneEventsList: _buildLaneEvents(),
         onEventTap: onEventTapCallBack,
+        onEmptySlotTap: onTimeSlotTappedCallBack,
         timetableStyle: TimetableStyle(
             startHour: 9,
             endHour: 19,
@@ -35,7 +35,6 @@ class _SchedulePageState extends State<SchedulePage> {
             laneColor: Colors.grey.shade100,
             timeItemTextColor: Colors.grey,
             timelineBorderColor: Colors.grey.shade200),
-        onEmptySlotTap: onTimeSlotTappedCallBack,
       ),
     );
   }
@@ -47,7 +46,7 @@ class _SchedulePageState extends State<SchedulePage> {
             name: '7월 2일 (1일차)',
             laneIndex: 1,
             backgroundColor: Colors.grey.shade100,
-            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold)),
         events: [
           TableEvent(
             eventId: 11,
@@ -56,7 +55,7 @@ class _SchedulePageState extends State<SchedulePage> {
             location: '\n컨벤션 홀',
             startTime: TableEventTime(hour: 12, minute: 0),
             endTime: TableEventTime(hour: 13, minute: 0),
-            backgroundColor: Color.fromRGBO(20, 10, 100, 170),
+            backgroundColor: const Color.fromRGBO(20, 10, 100, 170),
           ),
           TableEvent(
             eventId: 12,
@@ -65,7 +64,7 @@ class _SchedulePageState extends State<SchedulePage> {
             location: '\n각 세미나실',
             startTime: TableEventTime(hour: 15, minute: 0),
             endTime: TableEventTime(hour: 17, minute: 20),
-            backgroundColor: Color.fromRGBO(100, 190, 225, 100),
+            backgroundColor: const Color.fromRGBO(100, 190, 225, 100),
           ),
         ],
       ),
@@ -74,7 +73,7 @@ class _SchedulePageState extends State<SchedulePage> {
             name: '7월 3일 (2일차)',
             laneIndex: 2,
             backgroundColor: Colors.grey.shade100,
-            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold)),
         events: [
           TableEvent(
             title: 'An event 3',
@@ -82,7 +81,7 @@ class _SchedulePageState extends State<SchedulePage> {
             eventId: 21,
             startTime: TableEventTime(hour: 10, minute: 10),
             endTime: TableEventTime(hour: 11, minute: 45),
-            backgroundColor: Color.fromRGBO(300, 100, 0, 400),
+            backgroundColor: const Color.fromRGBO(300, 100, 0, 400),
           ),
         ],
       ),
@@ -91,7 +90,7 @@ class _SchedulePageState extends State<SchedulePage> {
             name: '7월 4일 (3일차)',
             laneIndex: 2,
             backgroundColor: Colors.grey.shade100,
-            textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold)),
         events: [
           TableEvent(
             title: 'An event 3',
@@ -99,7 +98,7 @@ class _SchedulePageState extends State<SchedulePage> {
             eventId: 21,
             startTime: TableEventTime(hour: 13, minute: 10),
             endTime: TableEventTime(hour: 16, minute: 45),
-            backgroundColor: Color.fromRGBO(40, 20, 20, 100),
+            backgroundColor: const Color.fromRGBO(40, 20, 20, 100),
           ),
         ],
       ),

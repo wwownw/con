@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:core';
 
-import 'home_info.dart';
-
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
 
@@ -26,15 +24,15 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        iconTheme: CupertinoIconThemeData(color: Colors.black),
+        iconTheme: const CupertinoIconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text(
+        title: const Text(
           '지도',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: Center(
+      body: const Center(
           // child: FutureBuilder(
           //   future: this.fetch(),
           //   builder: (context, snap) {

@@ -1,11 +1,8 @@
-import 'package:con/mypage.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'addnotice.dart';
-import 'home_info.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({Key? key}) : super(key: key);
@@ -21,25 +18,27 @@ class _NoticePageState extends State<NoticePage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        iconTheme: CupertinoIconThemeData(color: Colors.black),
+        iconTheme: const CupertinoIconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text(
+        title: const Text(
           '행사공지',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: notices(),
+      body: const Notices(),
     );
   }
 }
 
-class notices extends StatefulWidget {
+class Notices extends StatefulWidget {
+  const Notices({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<notices> {
+class _HomeState extends State<Notices> {
   final fb = FirebaseDatabase.instance;
 
   @override
@@ -53,11 +52,11 @@ class _HomeState extends State<notices> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => addnotice(),
+              builder: (_) => AddNotice(),
             ),
           );
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
@@ -66,32 +65,29 @@ class _HomeState extends State<notices> {
         itemBuilder: (context, snapshot, animation, index) {
           return GestureDetector(
             onTap: () {},
-            child: Container(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                tileColor: Colors.grey[200],
+                trailing: IconButton(
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
                   ),
-                  tileColor: Colors.grey[200],
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      ref.child(snapshot.key!).remove();
-                    },
-                  ),
-                  title: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      snapshot.value.toString(),
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.normal,
-                      ),
+                  onPressed: () {
+                    ref.child(snapshot.key!).remove();
+                  },
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    snapshot.value.toString(),
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),

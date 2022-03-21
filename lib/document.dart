@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'home_info.dart';
 
 class FilePage extends StatefulWidget {
   const FilePage({Key? key}) : super(key: key);
@@ -15,24 +12,25 @@ class FilePage extends StatefulWidget {
 class _FilePageState extends State<FilePage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: 외부 게시판 연동해서 파일 다운받을 수 있게 + pdf뷰어 해야함 (웹뷰?)
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        iconTheme: CupertinoIconThemeData(color: Colors.black),
+        iconTheme: const CupertinoIconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text(
+        title: const Text(
           '행사자료',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: InterPagee(),
+      body: const InterPagee(),
     );
   }
 }
 
 class InterPagee extends StatefulWidget {
+  const InterPagee({Key? key}) : super(key: key);
+
   @override
   _InterPageeState createState() => _InterPageeState();
 }
