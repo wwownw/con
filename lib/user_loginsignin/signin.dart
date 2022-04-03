@@ -1,3 +1,4 @@
+import 'package:con/user_loginsignin/selectaffiliation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,96 +20,12 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   //
   final _formKey = GlobalKey<FormState>();
   //
-  final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
-  final phoneEditingController = new TextEditingController();
-  final attachedEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
   //
   @override
   Widget build(BuildContext context) {
-    final nameField = TextFormField(
-      autofocus: false,
-      controller: nameEditingController,
-      keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regEx = new RegExp(r'^.{2,}$');
-        if (value!.isEmpty) {
-          return ('이름은 비워둘 수 없습니다.');
-        }
-        if (!regEx.hasMatch(value)) {
-          return ('이름은 최소 2자리 이상 입력해주세요.');
-        }
-        return null;
-      },
-      onSaved: (value) {
-        nameEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        prefixIcon: const Padding(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          child: Icon(Icons.person),
-        ),
-        hintText: '이름',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
-    final phoneField = TextFormField(
-      autofocus: false,
-      controller: phoneEditingController,
-      keyboardType: TextInputType.phone,
-      validator: (value) {
-        RegExp regEx = new RegExp('^[0-9]');
-        RegExp regExx = new RegExp(r'^.{11,}$');
-        if (value!.isEmpty) {
-          return ('연락처는 비워둘 수 없습니다.');
-        }
-        if (!regEx.hasMatch(value)) {
-          return ('연락처는 숫자만 입력할 수 있습니다.');
-        }
-        if (!regExx.hasMatch(value)) {
-          return ('올바른 연락처를 입력해주세요.');
-        }
-        return null;
-      },
-      onSaved: (value) {
-        phoneEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        prefixIcon: const Padding(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          child: Icon(Icons.phone),
-        ),
-        hintText: '연락처',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
-    final attachedField = TextFormField(
-      autofocus: false,
-      controller: attachedEditingController,
-      keyboardType: TextInputType.text,
-      onSaved: (value) {
-        attachedEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        prefixIcon: const Padding(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          child: Icon(Icons.person),
-        ),
-        hintText: '소속',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
     final emailField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
@@ -199,13 +116,13 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.grey,
       child: MaterialButton(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(18),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signUP(emailEditingController.text, passwordEditingController.text);
         },
         child: const Text(
-          '가입하기',
+          '다음으로',
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -223,30 +140,44 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(35),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              nameField,
-              const SizedBox(height: 10),
-              phoneField,
-              const SizedBox(height: 10),
-              attachedField,
-              const SizedBox(height: 10),
-              emailField,
-              const SizedBox(height: 10),
-              passwordField,
-              const SizedBox(height: 10),
-              confirmPasswordField,
-              const SizedBox(height: 20),
-              signinButton,
-            ],
-          ),
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          children: [
+            Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    '로그인 시 사용할 \n이메일과 비밀번호를 적어주세요',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  emailField,
+                  const SizedBox(height: 10),
+                  passwordField,
+                  const SizedBox(height: 10),
+                  confirmPasswordField,
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: signinButton,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -270,9 +201,182 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
 
     userModel.email = user!.email;
     userModel.uid = user.uid;
+
+    await firebasefirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => const RegisterationNext()),
+        (route) => false);
+  }
+}
+
+class RegisterationNext extends StatefulWidget {
+  const RegisterationNext({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterationNext> createState() => _RegisterationNextState();
+}
+
+class _RegisterationNextState extends State<RegisterationNext> {
+  final _auth = FirebaseAuth.instance;
+  //
+  final _formKey = GlobalKey<FormState>();
+  //
+  final nameEditingController = new TextEditingController();
+  final phoneEditingController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final nameField = TextFormField(
+      autofocus: false,
+      controller: nameEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        RegExp regEx = new RegExp(r'^.{2,}$');
+        if (value!.isEmpty) {
+          return ('이름은 비워둘 수 없습니다.');
+        }
+        if (!regEx.hasMatch(value)) {
+          return ('이름은 최소 2자리 이상 입력해주세요.');
+        }
+        return null;
+      },
+      onSaved: (value) {
+        nameEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          child: Icon(Icons.person),
+        ),
+        hintText: '이름',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+    final phoneField = TextFormField(
+      autofocus: false,
+      controller: phoneEditingController,
+      keyboardType: TextInputType.phone,
+      validator: (value) {
+        RegExp regEx = new RegExp('^[0-9]');
+        RegExp regExx = new RegExp(r'^.{11,}$');
+        if (value!.isEmpty) {
+          return ('연락처는 비워둘 수 없습니다.');
+        }
+        if (!regEx.hasMatch(value)) {
+          return ('연락처는 숫자만 입력할 수 있습니다.');
+        }
+        if (!regExx.hasMatch(value)) {
+          return ('올바른 연락처를 입력해주세요.');
+        }
+        return null;
+      },
+      onSaved: (value) {
+        phoneEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: const Padding(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          child: Icon(Icons.phone),
+        ),
+        hintText: '연락처',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+    final doneButton = Material(
+      elevation: 2,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.grey,
+      child: MaterialButton(
+        padding: const EdgeInsets.all(18),
+        minWidth: double.infinity,
+        onPressed: () {
+          if (nameEditingController.text != null) {
+            if (nameEditingController.text != null) {
+              if (myAffiliation != null) {
+                // ignore: void_checks
+                return postDetailsToFirestore();
+              }
+            }
+          }
+        },
+        child: const Text(
+          '완료',
+          style: TextStyle(
+              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          children: [
+            Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    '좋습니다! \n사용자 정보를 알려주세요',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  nameField,
+                  const SizedBox(height: 10),
+                  phoneField,
+                  const SizedBox(height: 10),
+                  const SelectAffWidget(),
+                  const SizedBox(height: 15),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: doneButton,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  postDetailsToFirestore() async {
+    //파이어스토어 불러오기
+    FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
     userModel.name = nameEditingController.text;
     userModel.phone = phoneEditingController.text;
-    userModel.attached = attachedEditingController.text;
+    userModel.affiliation = myAffiliation;
 
     await firebasefirestore
         .collection("users")

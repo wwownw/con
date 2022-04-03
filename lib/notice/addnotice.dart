@@ -4,7 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'notice.dart';
 
+// ignore: must_be_immutable
 class AddNotice extends StatelessWidget {
+  TextEditingController noticeTitle = TextEditingController();
   TextEditingController notice = TextEditingController();
 
   final fb = FirebaseDatabase.instance;
@@ -38,19 +40,39 @@ class AddNotice extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              controller: notice,
-              decoration: InputDecoration(
-                prefix: const Padding(
-                  padding: EdgeInsets.only(right: 12),
+            child: Column(
+              children: [
+                TextField(
+                  controller: noticeTitle,
+                  decoration: InputDecoration(
+                    prefix: const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    border: _border,
+                    enabledBorder: _border,
+                    focusedBorder: _border,
+                    hintText: '제목',
+                  ),
                 ),
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                border: _border,
-                enabledBorder: _border,
-                focusedBorder: _border,
-                hintText: '공지사항',
-              ),
+                SizedBox(height: 10),
+                TextField(
+                  maxLines: 10,
+                  controller: notice,
+                  decoration: InputDecoration(
+                    prefix: const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    border: _border,
+                    enabledBorder: _border,
+                    focusedBorder: _border,
+                    hintText: '공지사항',
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -62,7 +84,7 @@ class AddNotice extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               ref
-                  .push()
+                  .child(noticeTitle.text)
                   .set(
                     notice.text,
                   )

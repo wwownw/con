@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'addnotice.dart';
+import 'noticee.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class NoticePage extends StatefulWidget {
 class _NoticePageState extends State<NoticePage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: 외부 게시판이랑 연동 (웹뷰?)
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -47,12 +47,11 @@ class _HomeState extends State<Notices> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         onPressed: () {
-          Navigator.push(
-            context,
+          Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => AddNotice(),
+              builder: (context) => AddNotice(),
             ),
           );
         },
@@ -60,41 +59,57 @@ class _HomeState extends State<Notices> {
           Icons.add,
         ),
       ),
-      body: FirebaseAnimatedList(
-        query: ref,
-        itemBuilder: (context, snapshot, animation, index) {
-          return GestureDetector(
-            onTap: () {},
-            child: Padding(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: FirebaseAnimatedList(
+          query: ref,
+          itemBuilder: (context, snapshot, animation, index) {
+            return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                tileColor: Colors.grey[200],
-                trailing: IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Noticee()));
+                },
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {
-                    ref.child(snapshot.key!).remove();
-                  },
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    snapshot.value.toString(),
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.normal,
+                  tileColor: Colors.grey[200],
+                  trailing: IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      ref.child(snapshot.key!).remove();
+                    },
+                  ),
+                  title: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10.0, top: 15, bottom: 15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            snapshot.key!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

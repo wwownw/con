@@ -2,7 +2,6 @@ import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'login.dart';
 
 class MyPage extends StatefulWidget {
@@ -52,13 +51,12 @@ class _MyPageState extends State<MyPage> {
                         child: Row(
                           children: [
                             const Padding(
-                              padding: EdgeInsets.only(left: 30, right: 20),
+                              padding: EdgeInsets.only(left: 30, right: 15),
                               child: CircleAvatar(
                                 backgroundColor: Colors.black,
                                 radius: 30.0,
                               ),
                             ),
-                            const SizedBox(height: 15.0),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -70,19 +68,28 @@ class _MyPageState extends State<MyPage> {
                                             fontSize: 22.0)),
                                   ],
                                 ),
+                                Row(
+                                  children: [
+                                    Text("${loggedInUser.email}",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey.shade600)),
+                                  ],
+                                ),
                               ],
                             ),
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(right: 30),
                               child: MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: const Text('로그아웃'),
-                                  color: Colors.white,
-                                  onPressed: () {
-                                    logout(context);
-                                  }),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                elevation: 1,
+                                color: Colors.white,
+                                minWidth: 10,
+                                onPressed: () {},
+                                child: const Text('편집'),
+                              ),
                             )
                           ],
                         ),
@@ -99,7 +106,7 @@ class _MyPageState extends State<MyPage> {
                             Icons.festival,
                             color: Colors.grey,
                           ),
-                          title: Text('${loggedInUser.attached}'),
+                          title: Text('${loggedInUser.affiliation}'),
                         ),
                       ),
                       Card(
@@ -115,6 +122,24 @@ class _MyPageState extends State<MyPage> {
                           ),
                           title: Text('${loggedInUser.phone}'),
                         ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 35.0),
+                            child: GestureDetector(
+                              child: Text(
+                                '로그아웃',
+                                style: TextStyle(color: Colors.grey.shade500),
+                              ),
+                              onTap: () {
+                                logout(context);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox.fromSize(size: const Size(0, 30))
                     ],
@@ -136,24 +161,26 @@ class _MyPageState extends State<MyPage> {
                     SizedBox.fromSize(size: const Size(0, 30)),
                     tpalsk(context, '실론나이트쿠키', '7/2, 14:00-16:00, 대천초등학교',
                         Colors.lightGreen.shade100),
-                    tpalsk(context, '수호의 성전', '7/3, 09:00-11:00, 컨벤션홀',
-                        Colors.amber.shade100),
-                    tpalsk(context, '길드 업데이트', '7/4, 13:00-14:00, 컴퓨터실',
-                        Colors.lightBlue.shade100),
                     SizedBox.fromSize(size: const Size(0, 10)),
                     Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       margin: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 30),
-                      color: Colors.grey.shade100,
+                      color: Colors.grey.shade600,
                       child: const ListTile(
-                        leading: Icon(Icons.add),
-                        title: Text('관심 세미나 추가하기'),
+                        leading: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          '관심 세미나 추가하기',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

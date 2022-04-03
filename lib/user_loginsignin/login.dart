@@ -120,7 +120,7 @@ class _LoginppState extends State<Loginpp> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.grey,
       child: MaterialButton(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(18),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signIn(emailController.text, passwordController.text);
@@ -141,7 +141,6 @@ class _LoginppState extends State<Loginpp> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
               emailField,
               const SizedBox(height: 10),
               passwordField,

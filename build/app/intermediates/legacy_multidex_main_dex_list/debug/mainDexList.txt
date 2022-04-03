@@ -139,6 +139,8 @@ androidx/core/view/WindowInsetsAnimationCompat$Callback$DispatchMode.class
 androidx/core/view/WindowInsetsCompat$Type$InsetsType.class
 androidx/core/view/accessibility/AccessibilityEventCompat$ContentChangeType.class
 androidx/core/widget/TextViewCompat$AutoSizeTextType.class
+androidx/exifinterface/media/ExifInterface$ExifStreamType.class
+androidx/exifinterface/media/ExifInterface$IfdType.class
 androidx/fragment/app/FragmentStateManagerControl.class
 androidx/lifecycle/Lifecycle$1.class
 androidx/lifecycle/Lifecycle$Event.class

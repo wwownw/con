@@ -42,7 +42,8 @@ class _InterPageeState extends State<InterPagee> {
       crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,
           mediaPlaybackRequiresUserGesture: false,
-          useOnDownloadStart: true),
+          useOnDownloadStart: true,
+          allowFileAccessFromFileURLs: true),
       android: AndroidInAppWebViewOptions(
         useHybridComposition: true,
       ),
@@ -55,9 +56,7 @@ class _InterPageeState extends State<InterPagee> {
     return SafeArea(
       child: InAppWebView(
         key: webViewKey,
-        initialUrlRequest: URLRequest(
-            url: Uri.parse(
-                'https://first-cashew-d37.notion.site/340a770de2544c6ba7d598c0e26591f9')),
+        initialUrlRequest: URLRequest(url: Uri.parse('https://www.naver.com/')),
         initialOptions: options,
         onWebViewCreated: (controller) {
           webViewController = controller;

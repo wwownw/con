@@ -162,7 +162,7 @@ class _PreclassPageState extends State<PreclassPage> {
                   ),
                 ),
                 floatingActionButton: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
                       onTap: () => nextQuestion(extractedData.length),
                       child: const NextButton()),
@@ -176,8 +176,19 @@ class _PreclassPageState extends State<PreclassPage> {
           } else {
             return Scaffold(
               backgroundColor: Colors.grey.shade100,
-              body: const Center(
-                child: CircularProgressIndicator(),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 25),
+                    Text(
+                      '퀴즈를 불러오고 있습니다. \n잠시만 기다려주세요.',
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
               ),
             );
           }
@@ -185,7 +196,7 @@ class _PreclassPageState extends State<PreclassPage> {
           return Scaffold(
             backgroundColor: Colors.grey.shade100,
             body: const Center(
-              child: Text('no data'),
+              child: Text('퀴즈 불러오기에 실패했습니다.'),
             ),
           );
         });

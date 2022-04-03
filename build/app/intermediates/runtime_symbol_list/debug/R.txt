@@ -2087,5 +2087,6 @@ int styleable com_facebook_login_view_com_facebook_tooltip_mode 5
 int[] styleable com_facebook_profile_picture_view { 0x7f030064, 0x7f03006b }
 int styleable com_facebook_profile_picture_view_com_facebook_is_cropped 0
 int styleable com_facebook_profile_picture_view_com_facebook_preset_size 1
-int xml image_share_filepaths 0x7f110000
-int xml provider_paths 0x7f110001
+int xml flutter_image_picker_file_paths 0x7f110000
+int xml image_share_filepaths 0x7f110001
+int xml provider_paths 0x7f110002

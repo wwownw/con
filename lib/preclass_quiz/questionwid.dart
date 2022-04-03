@@ -34,10 +34,12 @@ class QuestionWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(
-                question,
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 24),
+              Expanded(
+                child: Text(
+                  question,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, fontSize: 24),
+                ),
               ),
             ],
           ),

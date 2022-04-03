@@ -1,9 +1,13 @@
 import 'package:con/home.dart';
+import 'package:con/user_loginsignin/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
-class ResultBox extends StatelessWidget {
-  const ResultBox({
+class ResultBox extends StatefulWidget {
+  ResultBox({
     Key? key,
     required this.result,
     required this.questionLength,
@@ -13,7 +17,32 @@ class ResultBox extends StatelessWidget {
   final int questionLength;
 
   @override
+  State<ResultBox> createState() => _ResultBoxState();
+}
+
+class _ResultBoxState extends State<ResultBox> {
+  final fb = FirebaseDatabase.instance;
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final ref = fb.ref().child('quizresult');
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: background,
@@ -30,23 +59,23 @@ class ResultBox extends StatelessWidget {
             const SizedBox(height: 15),
             CircleAvatar(
               radius: 50,
-              backgroundColor: result == questionLength / 2
+              backgroundColor: widget.result == widget.questionLength / 2
                   ? Colors.yellow.shade800
-                  : result < questionLength / 2
+                  : widget.result < widget.questionLength / 2
                       ? incorrect
                       : correct,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '$result',
+                    '${widget.result}',
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '/$questionLength',
+                    '/${widget.questionLength}',
                     style: TextStyle(
                         color: Colors.white.withAlpha(100),
                         fontSize: 30,
@@ -60,6 +89,13 @@ class ResultBox extends StatelessWidget {
               elevation: 0.5,
               hoverColor: Colors.white,
               onPressed: () {
+                ref
+                    .child(
+                        '${loggedInUser.affiliation}, ${loggedInUser.name}, ${loggedInUser.phone}')
+                    .set(
+                      widget.result,
+                    )
+                    .asStream();
                 Navigator.pushAndRemoveUntil(
                     (context),
                     MaterialPageRoute(builder: (context) => HomeItem()),
@@ -83,4 +119,19 @@ class ResultBox extends StatelessWidget {
   }
 }
 
-//서버에 결과 저장하고 홈으로 나가는 기능
+class QuizResult {
+  final String id;
+  final String phone;
+  final Map<String, String> result;
+
+  QuizResult({
+    required this.id,
+    required this.phone,
+    required this.result,
+  });
+
+  @override
+  String toString() {
+    return 'Result(id: $id, phone: $phone, result: $result)';
+  }
+}

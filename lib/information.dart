@@ -1,3 +1,4 @@
+import 'package:con/user_loginsignin/selectaffiliation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class _InfoPageState extends State<InfoPage> {
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: const Center(),
+      body: const SelectAffWidget(),
     );
   }
 }

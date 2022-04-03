@@ -5,10 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
-import 'coupon/coupon.dart';
 import 'document.dart';
 import 'information.dart';
-import 'map.dart';
+import 'regioninfo.dart';
 import 'notice/notice.dart';
 import 'faq.dart';
 import 'program.dart';
@@ -102,6 +101,7 @@ class _HomeItemState extends State<HomeItem> {
     var ad = Advertise();
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: SingleChildScrollView(
         physics: coolphone ? const NeverScrollableScrollPhysics() : null,
         child: SafeArea(
@@ -185,11 +185,11 @@ class _HomeItemState extends State<HomeItem> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      homeButtons(const InfoPage(), false, '행사정보',
+                      homeButtons(const InfoPage(), false, '대회정보',
                           Icons.wysiwyg_outlined),
                       homeButtons(
-                          const MapPage(), false, '지도', Icons.map_outlined),
-                      homeButtons(const SchedulePage(), false, '행사일정',
+                          const MapPage(), false, '지역정보', Icons.map_outlined),
+                      homeButtons(const SchedulePage(), false, '대회일정',
                           Icons.assignment_outlined),
                     ],
                   ),
@@ -197,16 +197,15 @@ class _HomeItemState extends State<HomeItem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       homeButtons(
-                          const NoticePage(), false, '행사공지', Icons.list),
-                      homeButtons(const QnaPage(), false, '문의', Icons.phone),
-                      homeButtons(const CouponPage(), true, '쿠폰',
-                          Icons.wallet_giftcard),
+                          const NoticePage(), false, '대회공지', Icons.list),
+                      homeButtons(const QnaPage(), false, '자주하는 질문',
+                          Icons.question_answer_outlined),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      homeButtons(const FilePage(), false, '행사자료',
+                      homeButtons(const FilePage(), false, '대회자료',
                           Icons.file_copy_outlined),
                     ],
                   ),
