@@ -19,7 +19,7 @@ class _SchedulePageState extends State<SchedulePage> {
         elevation: 0,
         title: const Text(
           '행사일정',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
       ),

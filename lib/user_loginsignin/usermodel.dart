@@ -4,18 +4,25 @@ class UserModel {
   String? name;
   String? phone;
   String? affiliation;
+  bool? admin;
 
-  UserModel({this.uid, this.email, this.name, this.phone, this.affiliation});
+  UserModel(
+      {this.uid,
+      this.email,
+      this.name,
+      this.phone,
+      this.affiliation,
+      this.admin});
 
   //서버 데이터 받는
   factory UserModel.fromMap(map) {
     return UserModel(
-      uid: map['uid'],
-      email: map['email'],
-      name: map['name'],
-      phone: map['phone'],
-      affiliation: map['affiliation'],
-    );
+        uid: map['uid'],
+        email: map['email'],
+        name: map['name'],
+        phone: map['phone'],
+        affiliation: map['affiliation'],
+        admin: map['admin']);
   }
 
   //서버로 보내는
@@ -26,6 +33,7 @@ class UserModel {
       'name': name,
       'phone': phone,
       'affiliation': affiliation,
+      'admin': admin,
     };
   }
 }

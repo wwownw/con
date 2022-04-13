@@ -1,17 +1,26 @@
+import 'package:con/noticeremove.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
-import 'notice.dart';
+class AddNotice extends StatefulWidget {
+  const AddNotice({Key? key}) : super(key: key);
 
-// ignore: must_be_immutable
-class AddNotice extends StatelessWidget {
+  @override
+  State<AddNotice> createState() => _AddNoticeState();
+}
+
+final fb = FirebaseDatabase.instance;
+
+class _AddNoticeState extends State<AddNotice> {
   TextEditingController noticeTitle = TextEditingController();
   TextEditingController notice = TextEditingController();
 
-  final fb = FirebaseDatabase.instance;
+  final ref = fb.ref().child('notice');
 
-  AddNotice({Key? key}) : super(key: key);
+  String createdDateString =
+      DateFormat.yMMMMd('en_US').add_jm().format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +29,6 @@ class AddNotice extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
     );
 
-    final ref = fb.ref().child('notice');
-
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -29,7 +36,7 @@ class AddNotice extends StatelessWidget {
         elevation: 0,
         title: const Text(
           '공지 작성',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
       ),
@@ -56,7 +63,7 @@ class AddNotice extends StatelessWidget {
                     hintText: '제목',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextField(
                   maxLines: 10,
                   controller: notice,
@@ -83,14 +90,13 @@ class AddNotice extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
-              ref
-                  .child(noticeTitle.text)
-                  .set(
-                    notice.text,
-                  )
-                  .asStream();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => const NoticePage()));
+              ref.child('$createdDateString, ${noticeTitle.text}').set({
+                'noticeTitle': noticeTitle.text,
+                'noticed': notice.text,
+                'created': createdDateString,
+              });
+              Navigator.pop(context,
+                  MaterialPageRoute(builder: (_) => const NoticeRemovePage()));
             },
             child: const Text(
               "업로드",

@@ -2,7 +2,6 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'addnotice.dart';
 import 'noticee.dart';
 
 class NoticePage extends StatefulWidget {
@@ -22,7 +21,7 @@ class _NoticePageState extends State<NoticePage> {
         elevation: 0,
         title: const Text(
           '행사공지',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
       ),
@@ -35,10 +34,10 @@ class Notices extends StatefulWidget {
   const Notices({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _NoticesState createState() => _NoticesState();
 }
 
-class _HomeState extends State<Notices> {
+class _NoticesState extends State<Notices> {
   final fb = FirebaseDatabase.instance;
 
   @override
@@ -46,21 +45,8 @@ class _HomeState extends State<Notices> {
     final ref = fb.ref().child('notice');
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddNotice(),
-            ),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
+        padding: const EdgeInsets.only(top: 20.0, bottom: 20),
         child: FirebaseAnimatedList(
           query: ref,
           itemBuilder: (context, snapshot, animation, index) {
@@ -68,39 +54,62 @@ class _HomeState extends State<Notices> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Noticee()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Noticee()));
                 },
                 child: ListTile(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  tileColor: Colors.grey[200],
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      ref.child(snapshot.key!).remove();
-                    },
-                  ),
+                  tileColor: Colors.white,
                   title: Padding(
                     padding:
                         const EdgeInsets.only(left: 10.0, top: 15, bottom: 15),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Text(
-                            snapshot.key!,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.normal,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                snapshot.child('noticeTitle').value.toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+                        const Divider(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                snapshot.child('created').value.toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.grey.shade500),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                snapshot.child('noticed').value.toString(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.grey.shade700),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

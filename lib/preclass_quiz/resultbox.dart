@@ -1,4 +1,5 @@
 import 'package:con/home.dart';
+import 'package:con/preclass_quiz/preclassintro.dart';
 import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class ResultBox extends StatefulWidget {
-  ResultBox({
+  const ResultBox({
     Key? key,
     required this.result,
     required this.questionLength,
@@ -41,7 +42,7 @@ class _ResultBoxState extends State<ResultBox> {
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref().child('quizresult');
+    final ref = fb.ref().child('quizResult');
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -89,17 +90,20 @@ class _ResultBoxState extends State<ResultBox> {
               elevation: 0.5,
               hoverColor: Colors.white,
               onPressed: () {
-                ref
-                    .child(
-                        '${loggedInUser.affiliation}, ${loggedInUser.name}, ${loggedInUser.phone}')
-                    .set(
-                      widget.result,
-                    )
-                    .asStream();
+                ref.child('${loggedInUser.phone}').set(
+                  {
+                    'affiliation': loggedInUser.affiliation,
+                    'name': loggedInUser.name,
+                    'phone': loggedInUser.phone,
+                  },
+                ).asStream();
                 Navigator.pushAndRemoveUntil(
                     (context),
                     MaterialPageRoute(builder: (context) => HomeItem()),
                     (route) => false);
+                setState(() {
+                  alreadyPressedq = true;
+                });
               },
               color: Colors.white,
               shape: RoundedRectangleBorder(

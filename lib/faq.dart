@@ -18,7 +18,7 @@ class _QnaPageState extends State<QnaPage> {
         elevation: 0,
         title: const Text(
           '문의',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
       ),

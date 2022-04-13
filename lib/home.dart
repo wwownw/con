@@ -1,11 +1,10 @@
 import 'package:con/user_loginsignin/mypage.dart';
-import 'package:con/preclass_quiz/preclassquiz.dart';
 import 'package:con/coupon/couponcard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
-import 'document.dart';
+import 'document/document.dart';
 import 'information.dart';
 import 'regioninfo.dart';
 import 'notice/notice.dart';
@@ -33,8 +32,8 @@ class _HomeItemState extends State<HomeItem> {
       child: Container(
         margin: const EdgeInsets.all(6),
         child: MaterialButton(
-            elevation: 1.5,
-            highlightElevation: 1.5,
+            elevation: 1,
+            highlightElevation: 1,
             highlightColor: Colors.grey[100],
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -99,143 +98,150 @@ class _HomeItemState extends State<HomeItem> {
     bool isOpen = false;
 
     var ad = Advertise();
+    var bn = MainBanner();
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: SingleChildScrollView(
         physics: coolphone ? const NeverScrollableScrollPhysics() : null,
         child: SafeArea(
-          child: Column(children: [
-            SizedBox(
-              width: size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25, top: 25, bottom: 25),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: const [
-                            Text(
-                              '2022',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: const [
-                            Text(
-                              '대한민국지속가능발전대회',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 25),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => (const MyPage())));
-                        },
-                        child: const Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: 35,
+          child: Column(
+            children: [
+              SizedBox(
+                width: size.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 25, top: 25, bottom: 25),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: const [
+                              Text(
+                                '2022',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                '대한민국지속가능발전대회',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      const SizedBox(width: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => (const MyPage())));
+                          },
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: 35,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Container(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const PreclassPage()));
-                  },
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(20)),
-                width: size.width,
-                height: size.width * .45,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      homeButtons(const InfoPage(), false, '대회정보',
-                          Icons.wysiwyg_outlined),
-                      homeButtons(
-                          const MapPage(), false, '지역정보', Icons.map_outlined),
-                      homeButtons(const SchedulePage(), false, '대회일정',
-                          Icons.assignment_outlined),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      homeButtons(
-                          const NoticePage(), false, '대회공지', Icons.list),
-                      homeButtons(const QnaPage(), false, '자주하는 질문',
-                          Icons.question_answer_outlined),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      homeButtons(const FilePage(), false, '대회자료',
-                          Icons.file_copy_outlined),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
+              Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 width: size.width,
-                height: 80,
+                height: size.width * .5,
                 child: Swiper(
-                  autoplay: true,
-                  autoplayDelay: 3000,
-                  itemCount: ad.advertises.length,
+                  viewportFraction: 0.83,
+                  scale: 0.9,
+                  pagination:
+                      const SwiperPagination(margin: EdgeInsets.all(15)),
+                  itemCount: bn.banner.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: ad.advertises[index],
+                      child: bn.banner[index],
                     );
                   },
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(40),
-            ),
-          ]),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        homeButtons(const InfoPage(), false, '대회정보',
+                            Icons.wysiwyg_outlined),
+                        homeButtons(
+                            const MapPage(), false, '지역정보', Icons.map_outlined),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        homeButtons(const SchedulePage(), false, '대회일정',
+                            Icons.assignment_outlined),
+                        homeButtons(
+                            const NoticePage(), false, '대회공지', Icons.list),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        homeButtons(const QnaPage(), false, '자주하는 질문',
+                            Icons.question_answer_outlined),
+                        homeButtons(const FilePage(), false, '대회자료',
+                            Icons.file_copy_outlined),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  width: size.width,
+                  height: 80,
+                  child: Swiper(
+                    autoplay: true,
+                    autoplayDelay: 3000,
+                    itemCount: ad.advertises.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: ad.advertises[index],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(40),
+              ),
+            ],
+          ),
         ),
       ),
     );

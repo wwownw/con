@@ -20,9 +20,9 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
   //
   final _formKey = GlobalKey<FormState>();
   //
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final confirmPasswordEditingController = new TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final confirmPasswordEditingController = TextEditingController();
   //
   @override
   Widget build(BuildContext context) {
@@ -67,6 +67,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         if (!regEx.hasMatch(value)) {
           return ('비밀번호는 최소 6자리 이상입니다.');
         }
+        return null;
       },
       onSaved: (value) {
         passwordEditingController.text = value!;
@@ -95,6 +96,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             passwordEditingController.text) {
           return ('비밀번호를 다시 확인해주세요.');
         }
+        return null;
       },
       onSaved: (value) {
         confirmPasswordEditingController.text = value!;
@@ -111,7 +113,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         ),
       ),
     );
-    final signinButton = Material(
+    final signInButton = Material(
       elevation: 2,
       borderRadius: BorderRadius.circular(30),
       color: Colors.grey,
@@ -175,7 +177,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: signinButton,
+        child: signInButton,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -226,8 +228,8 @@ class _RegisterationNextState extends State<RegisterationNext> {
   //
   final _formKey = GlobalKey<FormState>();
   //
-  final nameEditingController = new TextEditingController();
-  final phoneEditingController = new TextEditingController();
+  final nameEditingController = TextEditingController();
+  final phoneEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +267,7 @@ class _RegisterationNextState extends State<RegisterationNext> {
       controller: phoneEditingController,
       keyboardType: TextInputType.phone,
       validator: (value) {
-        RegExp regEx = new RegExp('^[0-9]');
+        RegExp regEx = new RegExp(r'^[0-9]');
         RegExp regExx = new RegExp(r'^.{11,}$');
         if (value!.isEmpty) {
           return ('연락처는 비워둘 수 없습니다.');

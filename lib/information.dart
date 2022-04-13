@@ -1,4 +1,3 @@
-import 'package:con/user_loginsignin/selectaffiliation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +18,11 @@ class _InfoPageState extends State<InfoPage> {
         elevation: 0,
         title: const Text(
           '행사정보',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
       ),
-      body: const SelectAffWidget(),
+      body: Column(),
     );
   }
 }

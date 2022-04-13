@@ -116,8 +116,8 @@ class _PreclassPageState extends State<PreclassPage> {
                   iconTheme: const CupertinoIconThemeData(color: Colors.black),
                   elevation: 0,
                   title: const Text(
-                    '퀴즈타임',
-                    style: TextStyle(color: Colors.black),
+                    '',
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   backgroundColor: Colors.grey[100],
                 ),
