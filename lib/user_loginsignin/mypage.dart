@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:con/user_loginsignin/userinfomodify.dart';
 import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,8 +68,9 @@ class _MyPageState extends State<MyPage> {
                             const Padding(
                               padding: EdgeInsets.only(left: 30, right: 15),
                               child: CircleAvatar(
-                                backgroundColor: Colors.black,
-                                radius: 30.0,
+                                backgroundImage:
+                                    AssetImage('images/SDGlogo.png'),
+                                radius: 25.0,
                               ),
                             ),
                             Column(
@@ -201,6 +204,72 @@ class _MyPageState extends State<MyPage> {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30.0, right: 30, top: 35, bottom: 10),
+                  child: Row(
+                    children: [
+                      Container(
+                          width: 60,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.lightGreen.shade600,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: const Center(
+                              child: Text(
+                            '주최',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ))),
+                      const SizedBox(width: 20),
+                      Expanded(
+                          child: Text('환경부, 충청남도, 보령시, 2022 대한민국지속가능발전대회조직위원회',
+                              style: TextStyle(
+                                  color: Colors.grey.shade600, fontSize: 15))),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30.0, right: 30, top: 10, bottom: 15),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: 60,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.lightGreen.shade600,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: const Center(
+                              child: Text(
+                            '주관',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ))),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Text(
+                          '전국지속가능발전협의회, 충남지속가능발전협의회, 보령시지속가능발전협의회, 충남권지속가능발전협의회협력위원회, 이클레이한국사무소, 지속가능발전지방정부협의회, 지속가능발전학회',
+                          style: TextStyle(
+                              color: Colors.grey.shade600, fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    width: 300,
+                    height: 200,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/boryeong.png'),
+                      ),
+                    ))
               ],
             ),
           ),

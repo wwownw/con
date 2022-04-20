@@ -219,9 +219,9 @@ flutter_local_notifications_platform_interface
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-5.0.0/
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-5.0.0/lib/
 flutter_native_splash
-2.12
-file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-1.3.2/
-file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-1.3.2/lib/
+2.15
+file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-2.1.6/
+file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-2.1.6/lib/
 flutter_pdfview
 2.12
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_pdfview-1.2.2/
@@ -298,6 +298,10 @@ js
 2.12
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib/
+lint
+2.15
+file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/lint-1.8.2/
+file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/lint-1.8.2/lib/
 lints
 2.12
 file:///Users/jiwon/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/
