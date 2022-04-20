@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NoticeModel {
   late String? created;
-  String noticeTitle;
-  String notice;
+  String? noticeTitle;
+  String? notice;
+  String? creator;
 
   NoticeModel({
     this.created,
-    required this.notice,
-    required this.noticeTitle,
+    this.notice,
+    this.noticeTitle,
+    this.creator,
   });
 
   //서버 데이터 받는
@@ -15,6 +19,7 @@ class NoticeModel {
       created: map['created'],
       noticeTitle: map['noticeTitle'],
       notice: map['notice'],
+      creator: map['creator'],
     );
   }
 
@@ -24,6 +29,31 @@ class NoticeModel {
       'created': created,
       'noticeTitle': noticeTitle,
       'notice': notice,
+      'creator': creator,
     };
+  }
+}
+
+class DatabaseManager {
+  final CollectionReference noticeList =
+      FirebaseFirestore.instance.collection('notice');
+
+  Future getNoticeList() async {
+    List itemList = [];
+
+    try {
+      await noticeList
+          .orderBy('created', descending: true)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          itemList.add(element.data());
+        });
+      });
+      return itemList;
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
   }
 }

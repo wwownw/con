@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:con/user_loginsignin/mypage.dart';
 import 'package:con/coupon/couponcard.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,12 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import 'document/document.dart';
-import 'information.dart';
-import 'regioninfo.dart';
+import 'document/pdfapi.dart';
+import 'document/pdfviewpage.dart';
 import 'notice/notice.dart';
-import 'faq.dart';
-import 'program.dart';
-import 'advertise.dart';
+import 'admin/advertise.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeItem extends StatefulWidget {
@@ -77,6 +77,91 @@ class _HomeItemState extends State<HomeItem> {
                 Navigator.push(
                     context, CupertinoPageRoute(builder: (context) => page));
               }
+            }),
+      ),
+    );
+  }
+
+  Expanded goPdfButtons(
+      String pdfName, bool lockstate, String name, IconData icon) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(6),
+        child: MaterialButton(
+            elevation: 1,
+            highlightElevation: 1,
+            highlightColor: Colors.grey[100],
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Colors.white,
+            child: Container(
+              margin: const EdgeInsets.only(top: 25, bottom: 25),
+              child: Column(
+                children: [
+                  Center(
+                    child: toIcon(context, icon),
+                  ),
+                  Divider(
+                    height: 10,
+                    thickness: 0,
+                    color: Colors.white.withAlpha(0),
+                  ),
+                  Center(
+                    child: Text(
+                      name,
+                      style:
+                          TextStyle(fontSize: 15, color: Colors.grey.shade600),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            onPressed: () async {
+              final url = pdfName;
+              final file = await PDFapi.loadFirebased(url);
+              if (file == null) return;
+              openPDF(context, file);
+            }),
+      ),
+    );
+  }
+
+  Expanded goWebButtons(
+      String urllink, bool lockstate, String name, IconData icon) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(6),
+        child: MaterialButton(
+            elevation: 1,
+            highlightElevation: 1,
+            highlightColor: Colors.grey[100],
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Colors.white,
+            child: Container(
+              margin: const EdgeInsets.only(top: 25, bottom: 25),
+              child: Column(
+                children: [
+                  Center(
+                    child: toIcon(context, icon),
+                  ),
+                  Divider(
+                    height: 10,
+                    thickness: 0,
+                    color: Colors.white.withAlpha(0),
+                  ),
+                  Center(
+                    child: Text(
+                      name,
+                      style:
+                          TextStyle(fontSize: 15, color: Colors.grey.shade600),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            onPressed: () async {
+              goWebLink(urllink);
             }),
       ),
     );
@@ -153,9 +238,9 @@ class _HomeItemState extends State<HomeItem> {
                                 CupertinoPageRoute(
                                     builder: (context) => (const MyPage())));
                           },
-                          child: const Icon(
+                          child: Icon(
                             Icons.person,
-                            color: Colors.black,
+                            color: Colors.lightGreen.shade700,
                             size: 35,
                           ),
                         ),
@@ -190,16 +275,16 @@ class _HomeItemState extends State<HomeItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        homeButtons(const InfoPage(), false, '대회정보',
+                        goPdfButtons('introduce.pdf', false, '대회소개',
                             Icons.wysiwyg_outlined),
-                        homeButtons(
-                            const MapPage(), false, '지역정보', Icons.map_outlined),
+                        goWebButtons('https://www.brcn.go.kr/tour/sub04_02.do',
+                            false, '지역정보', Icons.map_outlined),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        homeButtons(const SchedulePage(), false, '대회일정',
+                        goPdfButtons('program.pdf', false, '대회일정',
                             Icons.assignment_outlined),
                         homeButtons(
                             const NoticePage(), false, '대회공지', Icons.list),
@@ -208,8 +293,6 @@ class _HomeItemState extends State<HomeItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        homeButtons(const QnaPage(), false, '자주하는 질문',
-                            Icons.question_answer_outlined),
                         homeButtons(const FilePage(), false, '대회자료',
                             Icons.file_copy_outlined),
                       ],
@@ -220,13 +303,14 @@ class _HomeItemState extends State<HomeItem> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
                   width: size.width,
                   height: 80,
                   child: Swiper(
                     autoplay: true,
-                    autoplayDelay: 3000,
+                    autoplayDelay: 2000,
                     itemCount: ad.advertises.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ClipRRect(
@@ -245,6 +329,11 @@ class _HomeItemState extends State<HomeItem> {
         ),
       ),
     );
+  }
+
+  Future<void> openPDF(BuildContext context, File file) async {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)));
   }
 }
 

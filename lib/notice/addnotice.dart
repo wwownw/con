@@ -1,4 +1,7 @@
-import 'package:con/noticeremove.dart';
+import 'package:con/admin/noticeremove.dart';
+import 'package:con/notice/noticemodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -16,6 +19,7 @@ final fb = FirebaseDatabase.instance;
 class _AddNoticeState extends State<AddNotice> {
   TextEditingController noticeTitle = TextEditingController();
   TextEditingController notice = TextEditingController();
+  TextEditingController noticeCreator = TextEditingController();
 
   final ref = fb.ref().child('notice');
 
@@ -65,6 +69,21 @@ class _AddNoticeState extends State<AddNotice> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  controller: noticeCreator,
+                  decoration: InputDecoration(
+                    prefix: const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    border: _border,
+                    enabledBorder: _border,
+                    focusedBorder: _border,
+                    hintText: '작성자',
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextField(
                   maxLines: 10,
                   controller: notice,
                   decoration: InputDecoration(
@@ -90,11 +109,7 @@ class _AddNoticeState extends State<AddNotice> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
-              ref.child('$createdDateString, ${noticeTitle.text}').set({
-                'noticeTitle': noticeTitle.text,
-                'noticed': notice.text,
-                'created': createdDateString,
-              });
+              postDetailsToFirestore();
               Navigator.pop(context,
                   MaterialPageRoute(builder: (_) => const NoticeRemovePage()));
             },
@@ -109,5 +124,23 @@ class _AddNoticeState extends State<AddNotice> {
         ],
       ),
     );
+  }
+
+  postDetailsToFirestore() async {
+    //파이어스토어 불러오기
+    FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
+
+    NoticeModel noticeModel =
+        NoticeModel(notice: notice.text, noticeTitle: noticeTitle.text);
+
+    noticeModel.notice = notice.text;
+    noticeModel.noticeTitle = noticeTitle.text;
+    noticeModel.created = createdDateString;
+    noticeModel.creator = noticeCreator.text;
+
+    await firebasefirestore
+        .collection("notice")
+        .doc('$createdDateString, ${noticeTitle.text}')
+        .set(noticeModel.toMap());
   }
 }

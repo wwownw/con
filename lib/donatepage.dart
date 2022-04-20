@@ -90,7 +90,12 @@ class _DonatePageState extends State<DonatePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Image.asset('images/dndkd.png'),
+              child: Container(
+                height: 350,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('images/donate.png'))),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
@@ -103,7 +108,7 @@ class _DonatePageState extends State<DonatePage> {
                       onPressed: () {
                         Fluttertoast.showToast(
                             msg: '이미 참여하셨습니다.',
-                            backgroundColor: Colors.grey.shade700);
+                            backgroundColor: Colors.grey.shade800);
                       },
                       child: const Center(
                         child: Text(
@@ -119,7 +124,7 @@ class _DonatePageState extends State<DonatePage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       height: 65,
-                      color: Colors.deepOrange,
+                      color: Colors.lightGreen.shade700,
                       onPressed: () {
                         ref.child('${loggedInUser.phone}').set(
                           {

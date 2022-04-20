@@ -51,4 +51,10 @@ class PDFapi {
       return null;
     }
   }
+
+  static Future<File?> loadFirebased(String url) async {
+    final refPDF = FirebaseStorage.instance.ref().child(url);
+    final bytes = await refPDF.getData();
+    return _storeFile(url, bytes!);
+  }
 }

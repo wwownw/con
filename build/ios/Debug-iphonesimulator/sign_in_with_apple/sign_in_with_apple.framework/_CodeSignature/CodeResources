@@ -46,7 +46,7 @@
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		BMA/rB2ModNTzourw4gqPB+FbPE=
+		p6Wga/sLTFZzRdlcyarTvu9jdl8=
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		BMA/rB2ModNTzourw4gqPB+FbPE=
+		p6Wga/sLTFZzRdlcyarTvu9jdl8=
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		MBGyDqANLFjzSen4GjMxzTrxdHc=
+		mFo+mLblC3aGNG60ySeUE/96ueA=
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64.swiftdoc</key>
 		<data>
@@ -70,7 +70,7 @@
 		</data>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		MBGyDqANLFjzSen4GjMxzTrxdHc=
+		mFo+mLblC3aGNG60ySeUE/96ueA=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -178,11 +178,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BMA/rB2ModNTzourw4gqPB+FbPE=
+			p6Wga/sLTFZzRdlcyarTvu9jdl8=
 			</data>
 			<key>hash2</key>
 			<data>
-			SQganOYJUl8Kd+7p6zsdsTPjAc6KQdPyjw+rKyTgT0Y=
+			ITRtsxd/r6Gp1phSIaA0Oh2FTiA/Co+bsKGW9RnvjGM=
 			</data>
 		</dict>
 		<key>Modules/sign_in_with_apple.swiftmodule/arm64.swiftdoc</key>
@@ -200,11 +200,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BMA/rB2ModNTzourw4gqPB+FbPE=
+			p6Wga/sLTFZzRdlcyarTvu9jdl8=
 			</data>
 			<key>hash2</key>
 			<data>
-			SQganOYJUl8Kd+7p6zsdsTPjAc6KQdPyjw+rKyTgT0Y=
+			ITRtsxd/r6Gp1phSIaA0Oh2FTiA/Co+bsKGW9RnvjGM=
 			</data>
 		</dict>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -222,11 +222,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MBGyDqANLFjzSen4GjMxzTrxdHc=
+			mFo+mLblC3aGNG60ySeUE/96ueA=
 			</data>
 			<key>hash2</key>
 			<data>
-			S9Lptr2eitYZImxpBC8gskXdudRtLYbpoD1FU1yq+1o=
+			coL+c4uAXQ/uu6qU80UYsNoZkCbt8L0sj6PR8jgOLTw=
 			</data>
 		</dict>
 		<key>Modules/sign_in_with_apple.swiftmodule/x86_64.swiftdoc</key>
@@ -244,11 +244,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MBGyDqANLFjzSen4GjMxzTrxdHc=
+			mFo+mLblC3aGNG60ySeUE/96ueA=
 			</data>
 			<key>hash2</key>
 			<data>
-			S9Lptr2eitYZImxpBC8gskXdudRtLYbpoD1FU1yq+1o=
+			coL+c4uAXQ/uu6qU80UYsNoZkCbt8L0sj6PR8jgOLTw=
 			</data>
 		</dict>
 	</dict>

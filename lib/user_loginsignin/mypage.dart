@@ -1,8 +1,10 @@
+import 'package:con/user_loginsignin/userinfomodify.dart';
 import 'package:con/user_loginsignin/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../adminpage.dart';
+import '../admin/adminpage.dart';
 import 'login.dart';
 
 class MyPage extends StatefulWidget {
@@ -35,6 +37,15 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        iconTheme: const CupertinoIconThemeData(color: Colors.black),
+        elevation: 0,
+        title: const Text(
+          '내 정보',
+          style: TextStyle(color: Colors.black, fontSize: 18),
+        ),
+        backgroundColor: Colors.grey[100],
+      ),
       body: Stack(
         children: [
           Container(
@@ -49,7 +60,7 @@ class _MyPageState extends State<MyPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(top: 20),
                         child: Row(
                           children: [
                             const Padding(
@@ -81,18 +92,25 @@ class _MyPageState extends State<MyPage> {
                               ],
                             ),
                             const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30),
-                              child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                elevation: 1,
-                                color: Colors.white,
-                                minWidth: 10,
-                                onPressed: () {},
-                                child: const Text('편집'),
-                              ),
-                            )
+                            if (loggedInUser.admin != true)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  elevation: 1,
+                                  color: Colors.white,
+                                  minWidth: 10,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        (context),
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UserInfoModify()));
+                                  },
+                                  child: const Text('편집'),
+                                ),
+                              )
                           ],
                         ),
                       ),
@@ -150,10 +168,10 @@ class _MyPageState extends State<MyPage> {
                             Padding(
                               padding: const EdgeInsets.only(right: 15),
                               child: GestureDetector(
-                                child: const Text(
+                                child: Text(
                                   '관리자 메뉴',
                                   style: TextStyle(
-                                      color: Colors.deepOrangeAccent,
+                                      color: Colors.lightGreen.shade800,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onTap: () {

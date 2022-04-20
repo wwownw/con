@@ -176,7 +176,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(30.0),
         child: signInButton,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -231,25 +231,55 @@ class _RegisterationNextState extends State<RegisterationNext> {
   final nameEditingController = TextEditingController();
   final phoneEditingController = TextEditingController();
 
+  String? validateName(String? value) {
+    RegExp regEx = new RegExp(r'^.{2,}$');
+    if (value!.isEmpty) {
+      return ('이름은 비워둘 수 없습니다.');
+    }
+    if (!regEx.hasMatch(value)) {
+      return ('이름은 최소 2자리 이상 입력해주세요.');
+    }
+    return null;
+  }
+
+  String? validatePhone(String? value) {
+    RegExp regEx = new RegExp(r'^[0-9]');
+    RegExp regExx = new RegExp(r'^.{11,}$');
+    if (value!.isEmpty) {
+      return ('연락처는 비워둘 수 없습니다.');
+    }
+    if (!regEx.hasMatch(value)) {
+      return ('연락처는 숫자만 입력할 수 있습니다.');
+    }
+    if (!regExx.hasMatch(value)) {
+      return ('올바른 연락처를 입력해주세요.');
+    }
+    return null;
+  }
+
+  String? validateAffiliation(String? value) {
+    if (value!.isEmpty) {
+      return '소속을 골라주세요.';
+    } else {
+      return null;
+    }
+  }
+
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      Fluttertoast.showToast(
+          msg: '정상적으로 가입되었습니다.', backgroundColor: Colors.grey.shade800);
+      postDetailsToFirestore();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final nameField = TextFormField(
       autofocus: false,
       controller: nameEditingController,
       keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regEx = new RegExp(r'^.{2,}$');
-        if (value!.isEmpty) {
-          return ('이름은 비워둘 수 없습니다.');
-        }
-        if (!regEx.hasMatch(value)) {
-          return ('이름은 최소 2자리 이상 입력해주세요.');
-        }
-        return null;
-      },
-      onSaved: (value) {
-        nameEditingController.text = value!;
-      },
+      validator: validateName,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: const Padding(
@@ -266,20 +296,7 @@ class _RegisterationNextState extends State<RegisterationNext> {
       autofocus: false,
       controller: phoneEditingController,
       keyboardType: TextInputType.phone,
-      validator: (value) {
-        RegExp regEx = new RegExp(r'^[0-9]');
-        RegExp regExx = new RegExp(r'^.{11,}$');
-        if (value!.isEmpty) {
-          return ('연락처는 비워둘 수 없습니다.');
-        }
-        if (!regEx.hasMatch(value)) {
-          return ('연락처는 숫자만 입력할 수 있습니다.');
-        }
-        if (!regExx.hasMatch(value)) {
-          return ('올바른 연락처를 입력해주세요.');
-        }
-        return null;
-      },
+      validator: validatePhone,
       onSaved: (value) {
         phoneEditingController.text = value!;
       },
@@ -303,14 +320,7 @@ class _RegisterationNextState extends State<RegisterationNext> {
         padding: const EdgeInsets.all(18),
         minWidth: double.infinity,
         onPressed: () {
-          if (nameEditingController.text != null) {
-            if (nameEditingController.text != null) {
-              if (myAffiliation != null) {
-                // ignore: void_checks
-                return postDetailsToFirestore();
-              }
-            }
-          }
+          _submit();
         },
         child: const Text(
           '완료',
@@ -360,7 +370,7 @@ class _RegisterationNextState extends State<RegisterationNext> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(30.0),
         child: doneButton,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -384,7 +394,6 @@ class _RegisterationNextState extends State<RegisterationNext> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: '정상적으로 가입되었습니다.', backgroundColor: Colors.grey);
 
     Navigator.pushAndRemoveUntil(
         (context),

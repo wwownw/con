@@ -4,7 +4,7 @@ class UserModel {
   String? name;
   String? phone;
   String? affiliation;
-  bool? admin;
+  final bool? admin;
 
   UserModel(
       {this.uid,
@@ -17,12 +17,13 @@ class UserModel {
   //서버 데이터 받는
   factory UserModel.fromMap(map) {
     return UserModel(
-        uid: map['uid'],
-        email: map['email'],
-        name: map['name'],
-        phone: map['phone'],
-        affiliation: map['affiliation'],
-        admin: map['admin']);
+      uid: map['uid'],
+      email: map['email'],
+      name: map['name'],
+      phone: map['phone'],
+      affiliation: map['affiliation'],
+      admin: map['admin'],
+    );
   }
 
   //서버로 보내는

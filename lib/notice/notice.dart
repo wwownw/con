@@ -1,8 +1,7 @@
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:con/notice/noticemodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'noticee.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({Key? key}) : super(key: key);
@@ -38,86 +37,110 @@ class Notices extends StatefulWidget {
 }
 
 class _NoticesState extends State<Notices> {
-  final fb = FirebaseDatabase.instance;
+  FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
+
+  List noticedList = [];
+  List allNotice = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDatabaseList();
+  }
+
+  fetchDatabaseList() async {
+    dynamic resultant = await DatabaseManager().getNoticeList();
+
+    if (resultant == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        noticedList = resultant;
+      });
+    }
+  }
+
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.ref().child('notice');
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-        child: FirebaseAnimatedList(
-          query: ref,
-          itemBuilder: (context, snapshot, animation, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Noticee()));
-                },
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  tileColor: Colors.white,
-                  title: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10.0, top: 15, bottom: 15),
-                    child: Column(
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: noticedList.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              tileColor: Colors.white,
+              title: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                snapshot.child('noticeTitle').value.toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        Expanded(
+                          child: Text(
+                            noticedList[index]['noticeTitle'],
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
-                        const Divider(),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                snapshot.child('created').value.toString(),
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey.shade500),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                snapshot.child('noticed').value.toString(),
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey.shade700),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    const Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Divider(),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            noticedList[index]['created'],
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey.shade500),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            noticedList[index]['creator'],
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.lightGreen.shade800),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            noticedList[index]['notice'],
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey.shade700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            );
-          },
+            ),
+          ),
         ),
       ),
     );

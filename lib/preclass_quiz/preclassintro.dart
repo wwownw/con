@@ -69,7 +69,12 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Image.asset('images/dndkd.png'),
+              child: Container(
+                height: 350,
+                decoration: const BoxDecoration(
+                    image:
+                        DecorationImage(image: AssetImage('images/quiz.png'))),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
@@ -82,7 +87,7 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
                       onPressed: () {
                         Fluttertoast.showToast(
                             msg: '이미 참여하셨습니다.',
-                            backgroundColor: Colors.grey.shade700);
+                            backgroundColor: Colors.grey.shade800);
                       },
                       child: const Center(
                         child: Text(
@@ -98,7 +103,7 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       height: 65,
-                      color: Colors.deepOrange,
+                      color: Colors.lightGreen.shade700,
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const PreclassPage()));

@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:con/document/pdfapi.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:con/document/storageservice.dart';
+import 'package:con/document/docstorage.dart';
 import 'package:con/document/pdfviewpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class _FilePageState extends State<FilePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final Storage storage = Storage();
+    final DocStorage storage = DocStorage();
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -121,7 +120,7 @@ class _FilePageState extends State<FilePage> {
     //       MaterialButton(
     //         minWidth: 10,
     //         child: const Text('firebase'),
-    //         //폰 파일중에서 고르기
+    //         //파이어베이스에서 가져오기
     //         onPressed: () async {
     //           final url = 'lifestyle.pdf';
     //           final file = await PDFapi.loadFirebase(url);
