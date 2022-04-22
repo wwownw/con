@@ -19,6 +19,7 @@ class _FilePageState extends State<FilePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final DocStorage storage = DocStorage();
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -38,7 +39,8 @@ class _FilePageState extends State<FilePage> {
               snapshot.hasData) {
             return ListView.builder(
                 itemCount: snapshot.data!.items.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (context, index) {
+                  var name = snapshot.data!.items[index].name;
                   return GestureDetector(
                     onTap: () async {
                       final url = snapshot.data!.items[index].name;
@@ -54,16 +56,21 @@ class _FilePageState extends State<FilePage> {
                           horizontal: 30, vertical: 5),
                       height: 50,
                       width: size.height,
-                      child: Center(
-                        child: Row(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                snapshot.data!.items[index].name,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey.shade800),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Expanded(
+                                child: Text(
+                                  name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey.shade800),
+                                ),
                               ),
                             ),
                           ],

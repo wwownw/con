@@ -21,9 +21,36 @@ class _DonatePageState extends State<DonatePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  final _fb = FirebaseDatabase.instance.ref();
+  String _donateTitle = '';
+  String _donateText = '';
+  String _donateDate = '';
+
+  void _activateListners() {
+    _fb.child('bannerIntro/donate/donateTitle').onValue.listen((event) {
+      final textq = event.snapshot.value;
+      setState(() {
+        _donateTitle = '$textq';
+      });
+    });
+    _fb.child('bannerIntro/donate/donateText').onValue.listen((event) {
+      final textw = event.snapshot.value;
+      setState(() {
+        _donateText = '$textw';
+      });
+    });
+    _fb.child('bannerIntro/donate/donateDate').onValue.listen((event) {
+      final texte = event.snapshot.value;
+      setState(() {
+        _donateDate = '$texte';
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _activateListners();
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
@@ -54,9 +81,9 @@ class _DonatePageState extends State<DonatePage> {
         child: Column(
           children: [
             Row(
-              children: const [
+              children: [
                 Text(
-                  '같이 동참해주세요!',
+                  _donateTitle,
                   style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -67,7 +94,7 @@ class _DonatePageState extends State<DonatePage> {
             Row(
               children: [
                 Text(
-                  '2022년 7월 2일까지 참여 가능',
+                  _donateDate,
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
                 ),
               ],
@@ -76,10 +103,10 @@ class _DonatePageState extends State<DonatePage> {
               height: 20,
             ),
             Row(
-              children: const [
+              children: [
                 Expanded(
                   child: Text(
-                    '아래의 나도 참여하기 버튼을 누르면 참가비의 \n일부가 나무 한그루가 됩니다.',
+                    _donateText,
                     style: TextStyle(fontSize: 17),
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:con/preclass_quiz/preclassquiz.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,6 +14,38 @@ class PreclassIntroPage extends StatefulWidget {
 bool alreadyPressedq = false;
 
 class _PreclassIntroPageState extends State<PreclassIntroPage> {
+  final _fb = FirebaseDatabase.instance.ref();
+  String _quizTitle = '';
+  String _quizText = '';
+  String _quizDate = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _activateListners();
+  }
+
+  void _activateListners() {
+    _fb.child('bannerIntro/quiz/quizTitle').onValue.listen((event) {
+      final textq = event.snapshot.value;
+      setState(() {
+        _quizTitle = '$textq';
+      });
+    });
+    _fb.child('bannerIntro/quiz/quizText').onValue.listen((event) {
+      final textw = event.snapshot.value;
+      setState(() {
+        _quizText = '$textw';
+      });
+    });
+    _fb.child('bannerIntro/quiz/quizDate').onValue.listen((event) {
+      final texte = event.snapshot.value;
+      setState(() {
+        _quizDate = '$texte';
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +64,10 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
         child: Column(
           children: [
             Row(
-              children: const [
+              children: [
                 Expanded(
                   child: Text(
-                    '퀴즈 참여하고 기프티콘 받자!',
+                    _quizTitle,
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -46,7 +79,7 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
             Row(
               children: [
                 Text(
-                  '2022년 7월 2일까지 참여 가능',
+                  _quizDate,
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
                 ),
               ],
@@ -55,10 +88,10 @@ class _PreclassIntroPageState extends State<PreclassIntroPage> {
               height: 20,
             ),
             Row(
-              children: const [
+              children: [
                 Expanded(
                   child: Text(
-                    '참여해주신 분들께 기프티콘을 쏩니다! \n퀴즈는 한 번만 참여 가능합니다.',
+                    _quizText,
                     style: TextStyle(fontSize: 17),
                   ),
                 ),

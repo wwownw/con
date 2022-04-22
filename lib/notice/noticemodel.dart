@@ -46,9 +46,9 @@ class DatabaseManager {
           .orderBy('created', descending: true)
           .get()
           .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
+        for (var element in querySnapshot.docs) {
           itemList.add(element.data());
-        });
+        }
       });
       return itemList;
     } catch (e) {

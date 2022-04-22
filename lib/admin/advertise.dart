@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class MainBanner {
   List banner = [
     const Banner(),
-    const Banner(),
+    const Banners(),
   ];
 }
 
@@ -43,7 +43,7 @@ class Banners extends StatelessWidget {
         },
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: Colors.grey[400],
         borderRadius: BorderRadius.circular(20),
       ),
     );
@@ -52,10 +52,22 @@ class Banners extends StatelessWidget {
 
 class Advertise {
   List advertises = [
-    Advert('images/ad1.png', 'https://www.komipo.co.kr/kor/main/main.do'),
-    Advert('images/ad2.png', 'https://www.skens.com/sk/main/index.do'),
-    Advert('images/ad3.png', 'http://www.lng-tml.com/'),
-    Advert('images/ad4.png', 'http://www.cniwbc.co.kr/'),
+    Row(
+      children: [
+        Expanded(
+            child: advert(
+                'images/ad1.png', 'https://www.komipo.co.kr/kor/main/main.do')),
+        Expanded(
+            child: advert(
+                'images/ad2.png', 'https://www.skens.com/sk/main/index.do')),
+      ],
+    ),
+    Row(
+      children: [
+        Expanded(child: advert('images/ad3.png', 'http://www.lng-tml.com/')),
+        Expanded(child: advert('images/ad4.png', 'http://www.cniwbc.co.kr/')),
+      ],
+    ),
   ];
 }
 
@@ -67,7 +79,7 @@ Future<void> goWebLink(String urllink) async {
   }
 }
 
-Container Advert(String images, String urllink) {
+Container advert(String images, String urllink) {
   return Container(
     child: GestureDetector(
       onTap: () {

@@ -95,6 +95,7 @@ class _ResultBoxState extends State<ResultBox> {
                     'affiliation': loggedInUser.affiliation,
                     'name': loggedInUser.name,
                     'phone': loggedInUser.phone,
+                    'result': widget.result
                   },
                 ).asStream();
                 Navigator.pushAndRemoveUntil(

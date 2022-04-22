@@ -40,7 +40,6 @@ class _NoticesState extends State<Notices> {
   FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
 
   List noticedList = [];
-  List allNotice = [];
 
   @override
   void initState() {

@@ -11,6 +11,9 @@ import 'document/pdfapi.dart';
 import 'document/pdfviewpage.dart';
 import 'notice/notice.dart';
 import 'admin/advertise.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'notice/noticemodel.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeItem extends StatefulWidget {
@@ -70,12 +73,12 @@ class _HomeItemState extends State<HomeItem> {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('행사장에 방문한 경우에만 활성화되는 메뉴입니다.')));
                 } else {
-                  Navigator.push(
-                      context, CupertinoPageRoute(builder: (context) => page));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => page));
                 }
               } else {
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (context) => page));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => page));
               }
             }),
       ),
@@ -167,165 +170,220 @@ class _HomeItemState extends State<HomeItem> {
     );
   }
 
+  FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
+
+  List noticedList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDatabaseList();
+  }
+
+  Future<void> fetchDatabaseList() async {
+    dynamic resultant = await DatabaseManager().getNoticeList();
+
+    if (resultant == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        noticedList = resultant;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    bool coolphone = true;
-
-    void heightcheck() {
-      if (size.height < 780) {
-        coolphone = false;
-      }
-    }
-
-    heightcheck();
-
     bool isOpen = false;
 
     var ad = Advertise();
     var bn = MainBanner();
 
+    List items = [];
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: SingleChildScrollView(
-        physics: coolphone ? const NeverScrollableScrollPhysics() : null,
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                width: size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 25, top: 25, bottom: 25),
-                  child: Row(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 30, top: 20, bottom: 25, right: 30),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: const [
-                              Text(
-                                '2022',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: const [
-                              Text(
-                                '대한민국지속가능발전대회',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
+                      Row(
+                        children: const [
+                          Text(
+                            '2022',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      const SizedBox(width: 5),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 25),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => (const MyPage())));
-                          },
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.lightGreen.shade700,
-                            size: 35,
+                      Row(
+                        children: const [
+                          Text(
+                            '대한민국지속가능발전대회',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ),
+                  const Spacer(),
+                  const SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => (const MyPage())));
+                    },
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.lightGreen.shade700,
+                      size: 35,
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                width: size.width,
-                height: size.width * .5,
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: noticedList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(left: 25, right: 25, bottom: 5),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const NoticePage()));
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '[${noticedList[index]['creator']}]',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.lightGreen.shade800),
+                                ),
+                                flex: 1,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  noticedList[index]['noticeTitle'],
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey.shade500),
+                                ),
+                                flex: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 30),
+            Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              height: 190,
+              child: Swiper(
+                viewportFraction: 0.83,
+                scale: 0.9,
+                pagination: const SwiperPagination(margin: EdgeInsets.all(15)),
+                itemCount: bn.banner.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: bn.banner[index],
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      goPdfButtons('대회소개.pdf', false, '대회소개',
+                          Icons.wysiwyg_outlined),
+                      goWebButtons('https://www.brcn.go.kr/tour/sub04_02.do',
+                          false, '지역정보', Icons.map_outlined),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      goPdfButtons('대회일정.pdf', false, '대회일정',
+                          Icons.assignment_outlined),
+                      homeButtons(const FilePage(), false, '대회자료',
+                          Icons.file_copy_outlined),
+                    ],
+                  ),
+                  // Row(
+                  //   children: [
+                  //     homeButtons(const NoticePage(), false, '대회자료',
+                  //         Icons.file_copy_outlined),
+                  //   ],
+                  // ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white),
+                height: 80,
                 child: Swiper(
-                  viewportFraction: 0.83,
-                  scale: 0.9,
-                  pagination:
-                      const SwiperPagination(margin: EdgeInsets.all(15)),
-                  itemCount: bn.banner.length,
+                  autoplay: true,
+                  autoplayDelay: 2000,
+                  itemCount: ad.advertises.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: bn.banner[index],
+                      child: ad.advertises[index],
                     );
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        goPdfButtons('introduce.pdf', false, '대회소개',
-                            Icons.wysiwyg_outlined),
-                        goWebButtons('https://www.brcn.go.kr/tour/sub04_02.do',
-                            false, '지역정보', Icons.map_outlined),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        goPdfButtons('program.pdf', false, '대회일정',
-                            Icons.assignment_outlined),
-                        homeButtons(
-                            const NoticePage(), false, '대회공지', Icons.list),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        homeButtons(const FilePage(), false, '대회자료',
-                            Icons.file_copy_outlined),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white),
-                  width: size.width,
-                  height: 80,
-                  child: Swiper(
-                    autoplay: true,
-                    autoplayDelay: 2000,
-                    itemCount: ad.advertises.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: ad.advertises[index],
-                      );
-                    },
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(40),
-              ),
-            ],
-          ),
+            ),
+            // const Padding(
+            //   padding: EdgeInsets.all(40),
+            // ),
+          ],
         ),
       ),
     );
